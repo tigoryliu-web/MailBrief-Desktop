@@ -1,0 +1,4 @@
+"CFBundleDisplayName" = "邮件摘要";
+"CFBundleName" = "邮件摘要";
+"NSAppleEventsUsageDescription" = "邮件摘要需要只读访问 Microsoft Outlook 中已配置账号的收件箱，以生成邮件摘要。";
+"NSCalendarsFullAccessUsageDescription" = "邮件摘要只在你点击添加时读取当天安排以检查时间冲突，并在你确认后创建 Apple 日历事件。";
