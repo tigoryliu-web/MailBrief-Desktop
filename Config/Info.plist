@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>CFBundleDevelopmentRegion</key>
+    <string>zh-Hans</string>
+    <key>CFBundleLocalizations</key>
+    <array>
+        <string>zh-Hans</string>
+        <string>en</string>
+    </array>
+    <key>CFBundleDisplayName</key>
+    <string>邮件摘要</string>
+    <key>CFBundleExecutable</key>
+    <string>MailDigestDesktop</string>
+    <key>CFBundleIdentifier</key>
+    <string>com.mailbrief.desktop</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleIconFile</key>
+	<string>AppIcon</string>
+    <key>CFBundleName</key>
+    <string>邮件摘要</string>
+    <key>CFBundlePackageType</key>
+    <string>APPL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>0.6.1</string>
+	<key>CFBundleVersion</key>
+	<string>13</string>
+    <key>LSMinimumSystemVersion</key>
+    <string>14.0</string>
+    <key>LSUIElement</key>
+    <true/>
+    <key>NSHighResolutionCapable</key>
+    <true/>
+    <key>NSAppleEventsUsageDescription</key>
+    <string>邮件摘要需要只读访问 Microsoft Outlook 中已配置账号的收件箱，以生成邮件摘要。</string>
+    <key>NSCalendarsFullAccessUsageDescription</key>
+    <string>邮件摘要只在你点击添加时读取当天安排以检查时间冲突，并在你确认后创建 Apple 日历事件。</string>
+    <key>NSHumanReadableCopyright</key>
+    <string>MailBrief Desktop contributors</string>
+</dict>
+</plist>
