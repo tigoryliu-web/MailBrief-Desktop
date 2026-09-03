@@ -1,0 +1,4 @@
+"CFBundleDisplayName" = "Mail Digest";
+"CFBundleName" = "Mail Digest";
+"NSAppleEventsUsageDescription" = "Mail Digest needs read-only access to inboxes configured in Microsoft Outlook to create email digests.";
+"NSCalendarsFullAccessUsageDescription" = "Mail Digest checks local events for conflicts only when you choose to add an item, then creates an Apple Calendar event after your confirmation.";
