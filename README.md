@@ -1,58 +1,58 @@
 # MailBrief Desktop
 
-一款原生 macOS 桌面邮件摘要应用。它以桌面小组件的形式整理 Gmail、Outlook 及其他 IMAP 邮箱，并把每封邮件转换为简洁摘要和可勾选行动项。
+A native macOS desktop app that organizes Gmail, Outlook, and other IMAP inboxes in a desktop widget. It turns incoming messages into concise summaries and actionable checklist items.
 
-## 当前实现
+## Features
 
-- 壁纸层无边框窗口，可拖动、缩放并记忆位置。
-- 最多五个动态邮箱分区；支持添加、重命名、排序、断开和从本机移除账号。
-- Gmail 与个人 Outlook 使用只读 OAuth；iCloud、Yahoo、QQ、163 等其他邮箱可通过 TLS IMAP 和应用专用密码接入。
-- 折叠状态及紧急/重要/普通优先级排序。
-- AI 在优先级后标注一个邮件类型：需要操作、学校、财务、购物、旅行、订阅通讯、垃圾／低优先级或其他。
-- 推广广告会被彻底排除：Gmail“推广”分类及带明确群发营销标记的邮件在调用 OpenAI 前过滤，其余由 AI 判断；推广内容不进入摘要、通知或本地持久化数据。
-- 完成圆圈可撤销；完成项在下一次成功刷新时移除。
-- 保留手动刷新和单邮箱重试；也可启用最多五个每日固定刷新时间。
-- 错过的定时刷新不会补刷；全部已连接邮箱在最近15分钟内成功刷新时跳过；定时失败不自动重试。
-- 定时刷新只在发现新的紧急事项时通知，避免普通成功或单邮箱失败造成打扰。
-- 菜单栏图标、设置窗口和登录时启动选项。
-- OpenAI Responses API 结构化摘要，密钥存储于 macOS 钥匙串。
-- 可在设置中切换简体中文／English；新摘要按当前应用语言生成，旧摘要不重写分类。
-- PDF、DOCX、纯文本和图片 OCR 附件读取，20 MB 上限。
-- 本地 JSON 状态持久化与合并通知。
-- Gmail API 与 Microsoft Graph 只读同步；OAuth 令牌和 IMAP 应用专用密码保存在 macOS 钥匙串。
-- 含明确日期的摘要可在用户点击确认后写入 Apple 默认日历；添加前会在本机检查已有日程冲突并防止重复添加。
-- 演示模式和核心规则自动化测试。
+- A borderless desktop window that sits at the wallpaper level, supports dragging and resizing, and remembers its position.
+- Up to five dynamic mailbox sections with controls to add, rename, reorder, disconnect, and remove accounts from the Mac.
+- Read-only OAuth access for Gmail and personal Outlook accounts. Other providers, including iCloud, Yahoo, QQ Mail, and NetEase Mail, can connect through TLS IMAP with app-specific passwords.
+- Collapsible mailbox sections and Urgent, Important, and Normal priority sorting.
+- AI-generated message categories: Action Required, School, Finance, Shopping, Travel, Newsletter, Spam / Low Priority, or Other.
+- Aggressive promotion filtering. Gmail Promotions messages and mail with explicit bulk-marketing markers are removed before any OpenAI request; remaining messages are classified by AI. Filtered promotions never enter summaries, notifications, or persisted local data.
+- Reversible completion controls. Completed items are removed after the next successful refresh.
+- Manual refresh and per-mailbox retry, plus up to five optional daily scheduled refresh times.
+- Missed scheduled refreshes are not replayed. Scheduled runs are skipped when every connected mailbox refreshed successfully within the previous 15 minutes, and failed scheduled runs are not retried automatically.
+- Scheduled refresh notifications appear only for newly detected urgent items, avoiding routine success and individual mailbox-failure alerts.
+- Menu bar integration, a settings window, and an optional launch-at-login setting.
+- Structured summaries through the OpenAI Responses API, with the API key stored in the macOS Keychain.
+- A Simplified Chinese / English language switch in Settings. New summaries follow the current app language; existing summaries are not reclassified.
+- Text extraction from PDF, DOCX, plain-text, and OCR-compatible image attachments, with a 20 MB limit.
+- Local JSON state persistence and grouped notifications.
+- Read-only synchronization through the Gmail API and Microsoft Graph. OAuth tokens and IMAP app-specific passwords are stored in the macOS Keychain.
+- Summaries containing a clear date can be added to the default Apple Calendar after user confirmation. The app checks for local scheduling conflicts and duplicate events before adding anything.
+- Demo mode and automated tests for core rules.
 
-## 编译
+## Build
 
-需要 Xcode 26 或兼容版本。
+Xcode 26 or a compatible version is required.
 
 ```sh
 cd /path/to/MailBrief-Desktop
 ./scripts/build_app.sh
 ```
 
-默认使用临时签名进行本地构建。如需使用自己的 Apple Development 证书，请只在本机终端设置环境变量，不要把签名身份写入源码：
+Local builds use ad hoc signing by default. To use your own Apple Development certificate, set the signing identity only in your local terminal. Do not write it into the source code.
 
 ```sh
 MAIL_BRIEF_SIGNING_IDENTITY="Apple Development: your-account@example.com (TEAMID)" ./scripts/build_app.sh
 ```
 
-生成的应用位于 `dist/邮件摘要.app`。
+The generated app and archive are written to the `dist/` directory.
 
-## 演示模式
+## Demo Mode
 
-演示模式只使用内置示例，不读取邮箱，也不会调用 OpenAI API：
+Demo mode uses built-in sample data. It does not read a mailbox or call the OpenAI API.
 
 ```sh
-open "dist/邮件摘要.app" --args --demo
+open dist/*.app --args --demo
 ```
 
-## 隐私原则
+## Privacy
 
-- Gmail 与 Outlook 仅请求只读邮件权限；IMAP 使用 TLS 加密连接和只读命令读取收件箱。
-- Apple 日历内容只在用户点击添加时于本机读取，用于检查时间冲突，不会发送给任何云端服务。
-- API 密钥、OAuth 令牌和 IMAP 应用专用密码只保存在 macOS 钥匙串。
-- 邮件正文和附件只在处理期间存在，不写入持久化摘要文件。
-- OpenAI 请求使用 `store: false`；账号密码和 OAuth 令牌不会发送给模型。
-- 项目不包含任何 API 密钥、OAuth 客户端凭据、邮箱账号或应用专用密码；这些信息必须由每位用户在自己的设备上配置。
+- Gmail and Outlook request read-only mail permissions. IMAP connections use TLS and read-only commands to access the inbox.
+- Apple Calendar data is read locally only after the user chooses to add an event. It is used for conflict detection and is never sent to a cloud service.
+- API keys, OAuth tokens, and IMAP app-specific passwords remain in the macOS Keychain.
+- Message bodies and attachments exist only while they are being processed and are not written to the persisted summary file.
+- OpenAI requests use `store: false`. Account passwords and OAuth tokens are never sent to the model.
+- This repository contains no API keys, OAuth client credentials, mailbox accounts, or app-specific passwords. Every user must configure those values on their own device.
