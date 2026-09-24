@@ -1,3 +1,4 @@
+import AppKit
 import SwiftUI
 
 struct DesktopWidgetView: View {
@@ -72,6 +73,9 @@ struct DesktopWidgetView: View {
         }
         .padding(.horizontal, 18)
         .padding(.vertical, 14)
+        .background {
+            WindowDragRegion()
+        }
     }
 
     private func headerControlLabel(
@@ -208,6 +212,28 @@ struct DesktopWidgetView: View {
         if state.isRefreshing { return L10n.text("正在整理新邮件…", "Organizing new mail…") }
         guard let date = state.lastRefresh else { return L10n.text("尚未更新", "Not Updated Yet") }
         return L10n.text("上次更新 \(L10n.dateTime(date, includeDate: false))", "Last updated \(L10n.dateTime(date, includeDate: false))")
+    }
+}
+
+private struct WindowDragRegion: NSViewRepresentable {
+    func makeNSView(context: Context) -> WindowDragView {
+        WindowDragView()
+    }
+
+    func updateNSView(_ nsView: WindowDragView, context: Context) {}
+}
+
+private final class WindowDragView: NSView {
+    override func acceptsFirstMouse(for event: NSEvent?) -> Bool {
+        true
+    }
+
+    override func mouseDown(with event: NSEvent) {
+        guard let window else {
+            super.mouseDown(with: event)
+            return
+        }
+        window.performDrag(with: event)
     }
 }
 
